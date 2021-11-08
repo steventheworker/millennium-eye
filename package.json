@@ -1,0 +1,25 @@
+{
+	"name": "millenium-rod",
+	"version": "1.0.0",
+	"main": "server/build/index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "cd server/build && node index.js",
+		"production": "cd server/build && node index.js --production",
+		"lib": "concurrently \"tsc -w\" \"cd server/build && nodemon index.js\"",
+		"client": "cd client && npm run start",
+		"dev": "concurrently \"npm run lib\" \"npm run client\""
+	},
+	"dependencies": {
+		"node-static": "^0.7.11",
+		"python-shell": "^3.0.1",
+		"sockjs": "^0.3.21"
+	},
+	"devDependencies": {
+		"@types/node-static": "^0.7.6",
+		"@types/python-shell": "^0.4.2",
+		"@types/sockjs": "^0.3.32",
+		"concurrently": "^6.0.0",
+		"nodemon": "^2.0.7"
+	}
+}

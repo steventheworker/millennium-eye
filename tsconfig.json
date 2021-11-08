@@ -1,0 +1,13 @@
+{
+	"exclude": ["node_modules", "server/build", "client"],
+	"compilerOptions": {
+		"outDir": "./server/build/",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"module": "commonjs",
+		"target": "ES2019",
+		"allowJs": true,
+		"moduleResolution": "node",
+		"skipLibCheck": true
+	}
+}
