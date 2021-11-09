@@ -1,5 +1,5 @@
 {
-	"exclude": ["node_modules", "server/build", "client"],
+	"exclude": ["node_modules", "./server/build", "./client"],
 	"compilerOptions": {
 		"outDir": "./server/build/",
 		"sourceMap": true,

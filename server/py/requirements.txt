@@ -1,0 +1,6 @@
+mss
+Pillow
+pynput
+screeninfo
+clipboard
+py2exe
