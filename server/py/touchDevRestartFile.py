@@ -2,4 +2,4 @@
 from pathlib import Path
 import time
 time.sleep(1)
-Path('../../dist/index.js').touch()
+Path('../../build/index.js').touch()

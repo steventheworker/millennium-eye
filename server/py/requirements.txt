@@ -3,4 +3,4 @@ Pillow
 pynput
 screeninfo
 clipboard
-py2exe
+#py2exe

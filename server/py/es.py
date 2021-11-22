@@ -23,3 +23,15 @@ for _e in events:
         #release
         if e[1].startswith('r'): controller.release_mouse(True if e[1][1] == "r" else False)
     if t: time.sleep(t)
+
+# force a refresh after simulating input
+if sys.argv[2] == 'y':
+    import base64
+    import mss
+    time.sleep(1)
+    with mss.mss() as sct:
+        monitor = sct.monitors[1]   # Use the 1st monitor
+        im = sct.grab(monitor)
+        b64 = base64.b64encode(mss.tools.to_png(im.rgb, im.size))
+        base64str = b64.decode('utf-8')
+        print(base64str)

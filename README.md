@@ -30,4 +30,11 @@ Sockets: http://localhost:8000
 
 &nbsp;
 
+notes: you can only run yarn lib / yarn dev on the server, not externally or from ssh (you can start the process externally though), this is because of the screenshot library not having $DISPLAY set through ssh, dunno how to fix that right now
+
 #### protip: visit your local device using ipv4 adresses (eg: http://192.168.x.x:8000 format), for external devices: port forward and connect using a public ip / domain name
+
+pip3 install py2exe (windows only)
+
+Linux only (copy paste support): 
+sudo apt-get install -y xclip

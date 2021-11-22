@@ -1,4 +1,4 @@
-import events from "./events";
+import {events, getLastRefreshT} from "./events";
 import { snap } from "./snap-cache";
 import { Chat } from "./chat/chat";
 
@@ -96,7 +96,7 @@ function socketProcessReceivedData(socketid: ID, msg: string) {
 			const err = "|" + ("" + e.stack).replace(/\n/g, "\n|");
 			user.send("|<< error: " + e.message + "\n" + err);
 		}
-		console.log("<< " + message);
+		if (event !== "es")  console.log("<< " + message);
 	});
 }
 function socketConnect(socketid: ID, socket: Connection, ip: string) {
@@ -145,7 +145,7 @@ export const Users = {
 };
 
 //serve loop
-const targetTime = isDev ? 22222 : 1332;
+const targetTime = 7500;// const targetTime = isDev ? 22222 : 1332;
 let running = false;
 let firstRun = true;
 let undidFirstRun = false;
@@ -181,8 +181,11 @@ function runLoop() {
 		if (t < 0) t = 0;
 		Users.users.forEach((user) => user.send("r|" + data));
 		snapTimeout = setTimeout(() => {
-			if (running) runLoop();
-			else endLoop();
+			const forcePrevLapse = Date.now() - getLastRefreshT();
+			setTimeout(() => {
+				if (running) runLoop();
+				else endLoop();
+			}, forcePrevLapse < targetTime ? targetTime - forcePrevLapse : 0)
 		}, t);
 	});
 }
