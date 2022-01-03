@@ -4,21 +4,32 @@
 
 ## Install Steps
 
--   Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
--   Install pip packages (Python)
-
-# run from within &nbsp; &nbsp; "lib/py" &nbsp; &nbsp; folder
+- Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
+- Install pip packages: run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
 
 `pip3 install -r ./requirements.txt`
 
--   Now, finally clone the client code by pasting the line below @ project root:
+- ### platform dependent install instruction
+  - (windows only) (hot reload / restarting)
+    - `pip3 install py2exe`
+  - (Linux only)
+    - (copy paste support)
+      - `sudo apt-get install -y xclip`
+    - (shortcuts/hotkey support)
+      - `pip3 install pyautogui`
+  - (macOS only): Nothing yet 👄
+
+
+- Finally, clone the client code by pasting the line below @ project root:
     -   `git clone https://github.com/steventheworker/millenium-rod-client client`
--   Finished! ⛳️
+
+- Install Completed! ⛳️
 
 &nbsp;
 
 &nbsp;
 
+# protips
 # Running a development / production environment
 
 ## yarn dev / npm run dev &nbsp; &nbsp; or &nbsp; &nbsp; yarn production / npm run production
@@ -34,7 +45,11 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 
 #### protip: visit your local device using ipv4 adresses (eg: http://192.168.x.x:8000 format), for external devices: port forward and connect using a public ip / domain name
 
-pip3 install py2exe (windows only)
+&nbsp;
 
-Linux only (copy paste support): 
-sudo apt-get install -y xclip
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
