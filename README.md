@@ -23,13 +23,12 @@
 - Finally, clone the client code by pasting the line below @ project root:
     -   `git clone https://github.com/steventheworker/millenium-rod-client client`
 
-- Install Completed! ⛳️
+- Install Completed! ⛳️  -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
 
 &nbsp;
 
 &nbsp;
 
-# protips
 # Running a development / production environment
 
 ## yarn dev / npm run dev &nbsp; &nbsp; or &nbsp; &nbsp; yarn production / npm run production
@@ -43,7 +42,7 @@ Sockets: http://localhost:8000
 
 notes: you can only run yarn lib / yarn dev on the server, not externally or from ssh (you can start the process externally though), this is because of the screenshot library not having $DISPLAY set through ssh, dunno how to fix that right now
 
-#### protip: visit your local device using ipv4 adresses (eg: http://192.168.x.x:8000 format), for external devices: port forward and connect using a public ip / domain name
+#### protip: visit your local devices using ipv4 adresses (eg: http://192.168.x.x:8000 format), for external devices: port forward and connect using a public ip / domain name
 
 &nbsp;
 
