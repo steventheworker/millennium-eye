@@ -1,9 +1,21 @@
 import platform
-isLinux = platform.platform().startswith("Linux")
+from pynput.keyboard import Key, Controller
+keyboard = Controller()
+from pynput.mouse import Button, Controller
+mouse = Controller()
+
+os = platform.platform()
+isLinux = os.startswith("Linux")
+
+# OS dependent definitions
+def keyP(char):
+    keyboard.press(char) if not isLinux else pyautogui.keyDown(char);
+def keyR(char):
+    keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
+
 if isLinux:
     import pyautogui
-    # pyautogui key mappings
-    SpecialChars = {
+    WebPyKeyMap = {     # pyautogui key mappings
         "Space": "space",
         "Enter": "enter",
         "Backspace": "backspace",
@@ -54,14 +66,8 @@ if isLinux:
         "PageDown": "pagedown",
         "PageUp": "pageup"
     }
-from pynput.keyboard import Key, Controller
-keyboard = Controller()
-from pynput.mouse import Button, Controller
-mouse = Controller()
-
-if not isLinux:
-    #pynput key mappings (macOS & Windows)
-    SpecialChars = {
+else: # (macOS & Windows)
+    WebPyKeyMap = {     #pynput key mappings
         "Space": Key.space,
         "Enter": Key.enter,
         "Backspace": Key.backspace,
@@ -115,11 +121,7 @@ if not isLinux:
     }
 
 
-#keyboard helpers
-def keyP(char):
-    keyboard.press(char) if not isLinux else pyautogui.keyDown(char);
-def keyR(char):
-    keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
+#keyboard fn's
 def pressRelease(char, type):
     if type == 1 or type == 3:
         keyP(char)
@@ -130,20 +132,21 @@ def press(char, type=3, shift='false'):
         char = char[5:]
     elif char.startswith('Key'):
         char = char[3:]
-    elif SpecialChars[char]:
-        char = SpecialChars[char]
+    elif WebPyKeyMap[char]:
+        char = WebPyKeyMap[char]
     if shift == 'true':
         with keyboard.pressed(Key.shift):
             pressRelease(char, type)
     else:
         pressRelease(char, type)
 def paste():
-    pressRelease(Key.ctrl_l, 1)
-    pressRelease("v", 3)
-    pressRelease(Key.ctrl_l, 2)
+    isMac = os.startswith("mac")
+    press("MetaLeft" if isMac else "ControlLeft", 1)
+    press("Keyv", 3)
+    press("MetaLeft" if isMac else "ControlLeft", 2)
 
 
-#mouse helpers
+#mouse fn's
 def scroll_mouse(Dx, Dy):
     mouse.scroll(Dx, Dy)
 def move_mouse(Dx, Dy):
