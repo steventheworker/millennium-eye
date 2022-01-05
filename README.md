@@ -7,9 +7,9 @@
 - Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
 - Install pip packages: run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
 
-`pip3 install -r ./requirements.txt`
+  - `pip3 install -r ./requirements.txt`
 
-- ### platform dependent install instruction
+- platform dependent install instruction
   - (windows only) (hot reload / restarting)
     - `pip3 install py2exe`
   - (Linux only)
@@ -17,7 +17,7 @@
       - `sudo apt-get install -y xclip`
     - (shortcuts/hotkey support)
       - `pip3 install pyautogui`
-  - (macOS only): Nothing yet 👄
+  - (macOS only): Nothing, as of yet 👄
 
 
 - Finally, clone the client code by pasting the line below @ project root:
