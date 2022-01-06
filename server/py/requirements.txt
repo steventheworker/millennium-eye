@@ -1,9 +1,9 @@
 mss
 pynput
 clipboard
+Pillow
 
-# stopped using?
-#Pillow
+#??? i forget who uses this???
 #screeninfo
 
 # windows only
