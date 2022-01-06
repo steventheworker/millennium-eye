@@ -1,6 +1,10 @@
 mss
-Pillow
 pynput
-screeninfo
 clipboard
+
+# stopped using?
+#Pillow
+#screeninfo
+
+# windows only
 #py2exe

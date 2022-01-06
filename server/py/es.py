@@ -6,6 +6,8 @@ events = sys.argv[1].split(',')
 for _e in events:
     e = _e.split('~')
     t = int(e[0]) / 1000
+    if t: time.sleep(t)
+    
     if e[1] == "u" or e[1] == "d":
         #keyboard event
         numType = 1 if e[1] == "d" else 2 #key#d(own) = press, #key#u(p) = release
@@ -22,7 +24,6 @@ for _e in events:
         if e[1].startswith('p'): controller.press_mouse(True if e[1][1] == "r" else False)
         #release
         if e[1].startswith('r'): controller.release_mouse(True if e[1][1] == "r" else False)
-    if t: time.sleep(t)
 
 # force a refresh after simulating input
 if sys.argv[2] == 'y':

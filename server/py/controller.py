@@ -1,19 +1,11 @@
-import platform
-from pynput.keyboard import Key, Controller
-keyboard = Controller()
 from pynput.mouse import Button, Controller
 mouse = Controller()
-
+import platform
 os = platform.platform()
 isLinux = os.startswith("Linux")
 
-# OS dependent definitions
-def keyP(char):
-    keyboard.press(char) if not isLinux else pyautogui.keyDown(char);
-def keyR(char):
-    keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
-
-if isLinux:
+#key mappings
+if isLinux: # pyautogui! (for keyboarding only (used due to issues w/ hotkeys / no "Win" key on pynput (Ubuntu)))
     import pyautogui
     WebPyKeyMap = {     # pyautogui key mappings
         "Space": "space",
@@ -66,7 +58,9 @@ if isLinux:
         "PageDown": "pagedown",
         "PageUp": "pageup"
     }
-else: # (macOS & Windows)
+else: # Pynput (macOS & Windows)
+    from pynput.keyboard import Key, Controller
+    keyboard = Controller()
     WebPyKeyMap = {     #pynput key mappings
         "Space": Key.space,
         "Enter": Key.enter,
@@ -120,6 +114,7 @@ else: # (macOS & Windows)
         #numlock, scrollock, prntscreen, pausebreak
     }
 
+# OS dependent definitions
 
 #keyboard fn's
 def pressRelease(char, type):
@@ -135,7 +130,7 @@ def press(char, type=3, shift='false'):
     elif WebPyKeyMap[char]:
         char = WebPyKeyMap[char]
     if shift == 'true':
-        with keyboard.pressed(Key.shift):
+        with (pyautogui.hold('shift') if isLinux else keyboard.pressed(Key.shift)):
             pressRelease(char, type)
     else:
         pressRelease(char, type)
@@ -144,23 +139,31 @@ def paste():
     press("MetaLeft" if isMac else "ControlLeft", 1)
     press("Keyv", 3)
     press("MetaLeft" if isMac else "ControlLeft", 2)
+def keyP(char):
+    keyboard.press(char) if not isLinux else pyautogui.keyDown(char);
+def keyR(char):
+    keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
 
 
 #mouse fn's
+ForcedPynput = True # forced pynput for mouse command's (has better mouse implementation than pyautogui (on Ubuntu))
 def scroll_mouse(Dx, Dy):
-    mouse.scroll(Dx, Dy)
+    if isLinux and not ForcedPynput:
+        pyautogui.hscroll(Dx)
+        pyautogui.scroll(Dy)
+    else: mouse.scroll(Dx, Dy)
 def move_mouse(Dx, Dy):
-    mouse.move(Dx, Dy)
+    if isLinux and not ForcedPynput: pyautogui.move(Dx, Dy)
+    else: mouse.move(Dx, Dy)
 def set_mouse(x, y):
-    mouse.position = (x, y)
+    if isLinux and not ForcedPynput: pyautogui.moveTo(x, y)
+    else: mouse.position = (x, y)
 def press_mouse(rightButton):
-    btn = Button.left
-    if rightButton: btn = Button.right
-    mouse.press(btn)
+    if isLinux and not ForcedPynput: pyautogui.mouseDown(button='right' if rightButton else 'left')
+    else: mouse.press(Button.right if rightButton else Button.left)
 def release_mouse(rightButton):
-    btn = Button.left
-    if rightButton: btn = Button.right
-    mouse.release(btn)
+    if isLinux and not ForcedPynput: pyautogui.mouseUp(button='right' if rightButton else 'left')
+    else: mouse.release(Button.right if rightButton else Button.left)
 def pressRelease_mouse(rightButton):
     press_mouse(rightButton)
     release_mouse(rightButton)
