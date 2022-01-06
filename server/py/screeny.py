@@ -1,8 +1,6 @@
+# send a base64 screenshot  ===  aka the bottom of es.py
 import base64
-# from PIL import Image
 import mss
-
-
 with mss.mss() as sct:
     monitor = sct.monitors[1]   # Use the 1st monitor
     im = sct.grab(monitor)

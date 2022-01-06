@@ -25,11 +25,13 @@ for _e in events:
         #release
         if e[1].startswith('r'): controller.release_mouse(True if e[1][1] == "r" else False)
 
-# force a refresh after simulating input
+
+
+# force a refresh after simulating input (vvv) (Below code === screeny.py + (time.sleep(0.25)))
 if sys.argv[2] == 'y':
     import base64
     import mss
-    time.sleep(1)
+    time.sleep(0.25)
     with mss.mss() as sct:
         monitor = sct.monitors[1]   # Use the 1st monitor
         im = sct.grab(monitor)
