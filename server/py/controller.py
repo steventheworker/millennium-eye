@@ -4,7 +4,7 @@ import platform
 os = platform.platform()
 isLinux = os.startswith("Linux")
 
-#key mappings
+# key mappings (Use either pyautogui (Ubuntu) or pynput (Windows / MacOS)) - keyboarding
 if isLinux: # pyautogui! (for keyboarding only (used due to issues w/ hotkeys / no "Win" key on pynput (Ubuntu)))
     import pyautogui
     WebPyKeyMap = {     # pyautogui key mappings
@@ -114,9 +114,7 @@ else: # Pynput (macOS & Windows)
         #numlock, scrollock, prntscreen, pausebreak
     }
 
-# OS dependent definitions
-
-#keyboard fn's
+# keyboarding fn's
 def pressRelease(char, type):
     if type == 1 or type == 3:
         keyP(char)
@@ -145,7 +143,7 @@ def keyR(char):
     keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
 
 
-#mouse fn's
+# mousing fn's
 ForcedPynput = True # forced pynput for mouse command's (has better mouse implementation than pyautogui (on Ubuntu))
 def scroll_mouse(Dx, Dy):
     if isLinux and not ForcedPynput:
