@@ -4,26 +4,27 @@
 
 ## Install Steps
 
-- Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
-- Install pip packages: run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
+-   Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
+-   Install pip packages: run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
 
-  - `pip3 install -r ./requirements.txt`
+    -   `pip3 install -r ./requirements.txt`
 
-- platform dependent install instruction
-  - (windows only) (hot reload / restarting)
-    - `pip3 install py2exe`
-  - (Linux only)
-    - (copy paste support)
-      - `sudo apt-get install -y xclip`
-    - (shortcuts/hotkey support)
-      - `pip3 install pyautogui`
-  - (macOS only): Nothing, as of yet 👄
+-   platform dependent install instruction
 
+    -   (windows only) (hot reload / restarting)
+        -   `pip3 install py2exe`
+    -   (Linux only)
+        -   (copy paste support)
+            -   `sudo apt-get install -y xclip`
+        -   (shortcuts/hotkey support)
+            -   `pip3 install pyautogui`
+    -   (macOS only): Nothing, as of yet 👄
 
-- Finally, clone the client code by pasting the line below @ project root:
+-   Finally, clone the client code by pasting the line below @ project root:
+
     -   `git clone https://github.com/steventheworker/millenium-rod-client client`
 
-- Install Completed! ⛳️  -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
+-   Install Completed! ⛳️ -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
 
 &nbsp;
 
@@ -53,3 +54,6 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 &nbsp;
 
 https://docs.expo.dev/classic/building-standalone-apps/#if-you-choose-to-build-for-ios
+
+@ client
+expo build:ios --provisioning-profile-path se2020milleniumrod.mobileprovision
