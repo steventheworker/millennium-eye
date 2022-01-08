@@ -52,3 +52,4 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 
 &nbsp;
 
+https://docs.expo.dev/classic/building-standalone-apps/#if-you-choose-to-build-for-ios
