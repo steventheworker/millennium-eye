@@ -2,6 +2,8 @@ import * as Utils from "../utils";
 import * as child_process from "child_process";
 import { PythonShell } from "python-shell";
 
+const SCRIPTS_PATH = "~/Desktop/important";
+
 /*
 >> if (Object.keys(keysHeld).length) releaseKeys();
 >> if (Object.keys(mouseHeld).length) releaseMouse();
@@ -61,6 +63,9 @@ export const commands: Chat.ChatCommands = {
 		child_process.exec(target, (error, stdout, stderr) => {
 			connection.send(`${stdout}${stderr}`);
 		});
+	},
+	airpods: function () {
+		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
 	},
 	async eval(target, user, connection) {
 		this.canUseConsole();
