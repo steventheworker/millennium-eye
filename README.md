@@ -1,6 +1,8 @@
-# **Millenium-Rod** - A crossplatform (Windows, MacOS, and Linux!) R.A.T. (Remote Administration Tool)
+# **Millenium-eye** - A crossplatform (Windows, MacOS, and Linux!) R.A.T. (Remote Administration Tool)
 
-![alt text](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/84dc13b7-a2e7-4b45-83ec-311e72e82900/dcwu9bn-a035e58f-3e35-4437-9a7b-1737e03b8345.png/v1/fill/w_400,h_262,strp/millennium_rod_render__legacy_of_the_duelist__by_maxiuchiha22_dcwu9bn-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjYyIiwicGF0aCI6IlwvZlwvODRkYzEzYjctYTJlNy00YjQ1LTgzZWMtMzExZTcyZTgyOTAwXC9kY3d1OWJuLWEwMzVlNThmLTNlMzUtNDQzNy05YTdiLTE3MzdlMDNiODM0NS5wbmciLCJ3aWR0aCI6Ijw9NDAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.g5Zw2OROqT8aM61C_9gjQSWR2OiUmi-c1AcxSvSjE5o)
+<p align="center">
+    <img width="50px" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/627fe721-846f-4f75-ac61-111ca00b27dd/daqixic-2f41f980-cd8d-4448-a99c-2c0d450b512a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyN2ZlNzIxLTg0NmYtNGY3NS1hYzYxLTExMWNhMDBiMjdkZFwvZGFxaXhpYy0yZjQxZjk4MC1jZDhkLTQ0NDgtYTk5Yy0yYzBkNDUwYjUxMmEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ZSRBfN9RZDJBKjiZyv9lzuNjGmC091VNT0ay4RujU8k" />
+</p>
 
 ## Install Steps
 
@@ -22,7 +24,7 @@
 
 -   Finally, clone the client code by pasting the line below @ project root:
 
-    -   `git clone https://github.com/steventheworker/millenium-rod-client client`
+    -   `git clone https://github.com/steventheworker/millenium-eye-client client`
 
 -   Install Completed! ⛳️ -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
 
@@ -56,4 +58,4 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 https://docs.expo.dev/classic/building-standalone-apps/#if-you-choose-to-build-for-ios
 
 @ client
-expo build:ios --provisioning-profile-path se2020milleniumrod.mobileprovision
+expo build:ios --provisioning-profile-path se2020milleniumeye.mobileprovision
