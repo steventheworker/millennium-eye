@@ -2,12 +2,45 @@ import * as Utils from "../utils";
 import * as child_process from "child_process";
 import { PythonShell } from "python-shell";
 const SCRIPTS_PATH = "~/Desktop/important";
-
+import * as OS from "os";
+const os = OS.platform();
 export const commands: Chat.ChatCommands = {
-	//shortcuts / shell scripts
-	desk(data, user, connection) {
-		this.parse('/es 0~d~MetaLeft~false,0~d~Keyd~false,0~u~Keyd~false,0~u~MetaLeft~false');	
+	//shortcuts
+	restart() {
+		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
 	},
+	last: "switch",
+	switch() {
+		//alt+tab (linux, win), meta+tab (Mac)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Tab~false, 0~u~Tab~false, 0~u~MetaLeft~false"
+					: "0~d~AltLeft~false, 0~d~Tab~false, 0~u~Tab~false, 0~u~AltLeft~false"
+			}`
+		);
+	},
+	close: "quit",
+	quit() {
+		//alt+f4 (linux, win), cmd+Q(darwin)
+		this.parse(
+			`/es ${
+				os !== "darwin"
+					? "0~d~AltLeft~false,0~d~F4~false,0~u~F4~false,0~u~AltLeft~false"
+					: "0~d~MetaLeft~false, 0~d~Keyq~false, 0~u~Keyq~false, 0~u~MetaLeft~false"
+			}`
+		);
+	},
+	desk() {
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~F11~false,0~u~F11~false"
+					: "0~d~MetaLeft~false,0~d~Keyd~false,0~u~Keyd~false,0~u~MetaLeft~false"
+			}`
+		);
+	},
+	//shell scripts
 	release(target, user, connection) {
 		this.parse(`/bash ${SCRIPTS_PATH}/controller-release.sh`);
 	},
@@ -16,9 +49,9 @@ export const commands: Chat.ChatCommands = {
 	},
 	// core commands
 	es(target, user, connection) {
-		PythonShell.run("../py/es.py", { args: [target, 'n'] }, (err, res) => {
-			if (err) console.log('chat-commands.ts line 20 error!!!');
-	 });
+		PythonShell.run("../py/es.py", { args: [target, "n"] }, (err, res) => {
+			if (err) console.log("chat-commands.ts line 20 error!!!");
+		});
 	},
 	copy(target, user, connection) {
 		const mode = target.trim() ? "copyto" : "copy";
@@ -41,6 +74,7 @@ export const commands: Chat.ChatCommands = {
 			(err, res) => (err ? console.log("err", err, "\n\n", res) : 0)
 		);
 	},
+	//chat core commands
 	kickall: function () {
 		Users.users.forEach((user) => user.send("dc|"));
 	},
