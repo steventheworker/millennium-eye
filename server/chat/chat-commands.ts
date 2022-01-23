@@ -1,28 +1,24 @@
 import * as Utils from "../utils";
 import * as child_process from "child_process";
 import { PythonShell } from "python-shell";
-
-/*
->> if (Object.keys(keysHeld).length) releaseKeys();
->> if (Object.keys(mouseHeld).length) releaseMouse();
-*/
-function releaseKeys() {
-	//
-}
-function releaseMouse() {
-	//
-}
+const SCRIPTS_PATH = "~/Desktop/important";
 
 export const commands: Chat.ChatCommands = {
+	//shortcuts / shell scripts
+	desk(data, user, connection) {
+		this.parse('/es 0~d~MetaLeft~false,0~d~Keyd~false,0~u~Keyd~false,0~u~MetaLeft~false');	
+	},
 	release(target, user, connection) {
-		if (target === "keys") {
-			releaseKeys();
-		} else if (target === "mouse") {
-			releaseMouse();
-		} else {
-			releaseMouse();
-			releaseKeys();
-		}
+		this.parse(`/bash ${SCRIPTS_PATH}/controller-release.sh`);
+	},
+	airpods: function () {
+		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
+	},
+	// core commands
+	es(target, user, connection) {
+		PythonShell.run("../py/es.py", { args: [target, 'n'] }, (err, res) => {
+			if (err) console.log('chat-commands.ts line 20 error!!!');
+	 });
 	},
 	copy(target, user, connection) {
 		const mode = target.trim() ? "copyto" : "copy";
@@ -45,7 +41,6 @@ export const commands: Chat.ChatCommands = {
 			(err, res) => (err ? console.log("err", err, "\n\n", res) : 0)
 		);
 	},
-	// core commands
 	kickall: function () {
 		Users.users.forEach((user) => user.send("dc|"));
 	},
