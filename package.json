@@ -1,5 +1,5 @@
 {
-	"name": "millenium-eye",
+	"name": "millennium-eye",
 	"version": "1.0.0",
 	"main": "server/build/index.js",
 	"license": "MIT",
