@@ -1,4 +1,4 @@
-# **Millenium-eye** - A crossplatform (Windows, MacOS, and Linux!) R.A.T. (Remote Administration Tool)
+# **Millennium-eye** - A crossplatform (Windows, MacOS, and Linux!) R.A.T. (Remote Administration Tool)
 
 <p align="center">
     <img width="50px" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/627fe721-846f-4f75-ac61-111ca00b27dd/daqixic-2f41f980-cd8d-4448-a99c-2c0d450b512a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyN2ZlNzIxLTg0NmYtNGY3NS1hYzYxLTExMWNhMDBiMjdkZFwvZGFxaXhpYy0yZjQxZjk4MC1jZDhkLTQ0NDgtYTk5Yy0yYzBkNDUwYjUxMmEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ZSRBfN9RZDJBKjiZyv9lzuNjGmC091VNT0ay4RujU8k" />
@@ -24,7 +24,7 @@
 
 -   Finally, clone the client code by pasting the line below @ project root:
 
-    -   `git clone https://github.com/steventheworker/millenium-eye-client client`
+    -   `git clone https://github.com/steventheworker/millennium-eye-client client`
 
 -   Install Completed! ⛳️ -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
 
@@ -58,4 +58,4 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 https://docs.expo.dev/classic/building-standalone-apps/#if-you-choose-to-build-for-ios
 
 @ client
-expo build:ios --provisioning-profile-path se2020milleniumeye.mobileprovision
+expo build:ios --provisioning-profile-path se2020millenniumeye.mobileprovision
