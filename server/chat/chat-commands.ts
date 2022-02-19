@@ -5,12 +5,77 @@ const SCRIPTS_PATH = "~/Desktop/important";
 import * as OS from "os";
 const os = OS.platform();
 export const commands: Chat.ChatCommands = {
-	//shortcuts
-	restart() {
-		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
+	nightcat: "cat",
+	catnight: "cat",
+	cat() { //args: "night"
+		//open cat video.mp4
+		//open path2.mp4?????
 	},
-	last: "switch",
-	switch() {
+	//  browser tab   shortcuts
+	loc: "adressbar", //todo: args: url ( type & enter )
+	addressbar() {
+		//meta+l (Mac), control+l (linux + windows)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~ControlLeft~false"
+			}`
+		);
+
+	},
+	reopen: "reopenlasttab",
+	reopenlasttab() {
+		//shift+meta+t (Mac), shift+control+t (linux + windows)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"
+			}`
+		);
+	},
+	newtab: "tab", //todo: args: url
+	tab(target) {
+		//meta+t (Mac), control+t (linux + windows)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"
+			}
+			${!target ? "" : ", 0~t~" + target}`
+		);
+	},
+	next: "nexttab",
+	prev: "nexttab",
+	prevtab: "nexttab", //todo: holding shift
+	nexttab() {
+		//control+tab (macOS + linux + windows)
+		this.parse(
+			`/es ${"0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"}`
+		);
+	},
+
+	//  window  &  tab  shortcuts
+	closeall: "closewindow", //todo: holding shift
+	close: "closewindow",
+	closetab: "closewindow",
+	closewindow() { 
+		//meta+w (Mac), control+w (linux + windows)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keyw~false, 0~u~Keyw~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keyw~false, 0~u~Keyw~false, 0~u~ControlLeft~false"
+			}`
+		);
+	},
+
+	//  window    shortcuts
+	last: "lastwindow",
+	switch: "lastwindow",
+	lastwindow() {
 		//alt+tab (linux, win), meta+tab (Mac)
 		this.parse(
 			`/es ${
@@ -20,7 +85,15 @@ export const commands: Chat.ChatCommands = {
 			}`
 		);
 	},
-	close: "quit",
+
+	//OS shortcuts
+	browser() { //todo: args: url
+		//DEFAULT else windows (Edge), macOS (Safari), linux (Firefox)
+		this.parse('open https://google.com'); //todo: launch browser / make active
+	},
+	restart() {
+		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
+	},
 	quit() {
 		//alt+f4 (linux, win), cmd+Q(darwin)
 		this.parse(
@@ -75,6 +148,10 @@ export const commands: Chat.ChatCommands = {
 		);
 	},
 	//chat core commands
+	api: 'cmds',
+	cmds(target, user, connection) {
+		connection.send(Object.keys(commands).map((el, i) => el).join(","));
+	},
 	kickall: function () {
 		Users.users.forEach((user) => user.send("dc|"));
 	},

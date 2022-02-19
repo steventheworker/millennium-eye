@@ -141,6 +141,8 @@ def keyP(char):
     keyboard.press(char) if not isLinux else pyautogui.keyDown(char);
 def keyR(char):
     keyboard.release(char) if not isLinux else pyautogui.keyUp(char)
+def type(msg):
+    keyboard.type(msg) if not isLinux else pyautogui.typewrite(msg)
 
 
 # mousing fn's

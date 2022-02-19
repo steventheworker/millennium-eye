@@ -8,7 +8,9 @@ for _e in events:
     t = int(e[0]) / 1000
     if t: time.sleep(t)
     
-    if e[1] == "u" or e[1] == "d":
+    if e[1] == "t":
+        controller.type(e[2])
+    elif e[1] == "u" or e[1] == "d":
         #keyboard event
         numType = 1 if e[1] == "d" else 2 #key#d(own) = press, #key#u(p) = release
         key = e[2]
