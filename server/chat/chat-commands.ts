@@ -4,23 +4,57 @@ import { PythonShell } from "python-shell";
 const SCRIPTS_PATH = "~/Desktop/important";
 import * as OS from "os";
 const os = OS.platform();
+
 export const commands: Chat.ChatCommands = {
+	/*
+		"plugins"
+		shell scripts
+	*/
+	vlc: "cat",
 	nightcat: "cat",
 	catnight: "cat",
 	cat() { //args: "night"
 		//open cat video.mp4
 		//open path2.mp4?????
+		/*
+import os
+import subprocess
+import sys
+
+if sys.platform == "win32":
+    path = os.path.join("D:/", "analytics", "upper_is_called_here.py")
+elif sys.platform == "linux"
+    path = os.path.join(os.getenv("HOME"), "analytics", "upper_is_called_here.py")
+
+p = subprocess.Popen([sys.executable, path,
+                          str(counter)],
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+*/
+/*
+import subprocess
+import os
+p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC", "vlc.exe"),os.path.join("C:/", "Users", "Admin", "ocean.mkv")])
+*/
 	},
-	//  browser tab   shortcuts
-	loc: "adressbar", //todo: args: url ( type & enter )
-	addressbar() {
+	airpods: function () {
+		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
+	},
+	
+	
+	/*
+		browser tab   shortcuts
+	*/
+	loc: "addressbar", //todo: args: url ( type & enter )
+	addressbar(target) {
 		//meta+l (Mac), control+l (linux + windows)
 		this.parse(
 			`/es ${
 				os === "darwin"
 					? "0~d~MetaLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~MetaLeft~false"
 					: "0~d~ControlLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~ControlLeft~false"
-			}`
+			}
+			${!target ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
 		);
 
 	},
@@ -44,7 +78,7 @@ export const commands: Chat.ChatCommands = {
 					? "0~d~MetaLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~MetaLeft~false"
 					: "0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"
 			}
-			${!target ? "" : ", 0~t~" + target}`
+			${!target ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
 		);
 	},
 	next: "nexttab",
@@ -57,7 +91,10 @@ export const commands: Chat.ChatCommands = {
 		);
 	},
 
-	//  window  &  tab  shortcuts
+
+	/*
+		window  &  tab  shortcuts
+	*/
 	closeall: "closewindow", //todo: holding shift
 	close: "closewindow",
 	closetab: "closewindow",
@@ -72,7 +109,10 @@ export const commands: Chat.ChatCommands = {
 		);
 	},
 
-	//  window    shortcuts
+
+	/*
+			window    shortcuts
+	*/
 	last: "lastwindow",
 	switch: "lastwindow",
 	lastwindow() {
@@ -80,19 +120,79 @@ export const commands: Chat.ChatCommands = {
 		this.parse(
 			`/es ${
 				os === "darwin"
-					? "0~d~MetaLeft~false, 0~d~Tab~false, 0~u~Tab~false, 0~u~MetaLeft~false"
-					: "0~d~AltLeft~false, 0~d~Tab~false, 0~u~Tab~false, 0~u~AltLeft~false"
+					? "0~d~MetaLeft~false, 0~d~Tab~false, 0~u~Tab~false, 120~u~MetaLeft~false" //120ms delay
+					: "0~d~AltLeft~false, 0~d~Tab~false, 0~u~Tab~false, 120~u~AltLeft~false"
 			}`
 		);
 	},
 
-	//OS shortcuts
+
+	/*
+		OS shortcuts
+	*/
+	0: "digit",
+	1: "digit",
+	2: "digit",
+	3: "digit",
+	4: "digit",
+	5: "digit",
+	6: "digit",
+	7: "digit",
+	8: "digit",
+	9: "digit",
+	digit(target, user, connection, cmd) {
+		let x = Number(target.trim());
+		if (cmd === "digit" && !x) return connection.send('missing digit no.');
+		if (cmd !== "digit") x = Number(cmd);
+		this.parse(`/es 0~d~Digit${x}~false, 0~u~Digit${x}~false`);
+	},
+	unmute() {
+		//todo: 
+	},
+	mute() {
+		//todo: 
+	},
+	t: "type",
+	type(target) {
+		if (!target.trim()) return;
+		this.parse(`/es 0~t~${target}`);
+	},
+	esc: "escape",
+	escape() {
+		this.parse(`/es 0~d~Escape~false, 0~u~Escape~false`);
+	},
+	delete: "backspace",
+	del: "backspace",
+	back: "backspace",
+	backspace() {
+		this.parse(`/es 0~d~Backspace~false, 0~u~Backspace~false`);
+	},
+	ktab: "tabkey",
+	tabkey() {
+		this.parse(`/es 0~d~Tab~false, 0~u~Tab~false`);
+	},
+	enter() {
+		this.parse(`/es 0~d~Enter~false, 0~u~Enter~false`);
+	},
+	pause: "space",
+	play: "space",
+	space() {
+		this.parse(`/es 0~d~Space~false, 0~u~Space~false`);
+	},
+	chrome: 'browser',
 	browser() { //todo: args: url
 		//DEFAULT else windows (Edge), macOS (Safari), linux (Firefox)
 		this.parse('open https://google.com'); //todo: launch browser / make active
 	},
 	restart() {
 		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
+	},
+	apps() {
+		this.parse(
+			`/es ${os === "darwin" ? "0~d~ControlLeft~false, 0~d~ArrowUp~false, 0~u~ArrowUp~false, 0~u~ControlLeft~false" :
+				(os === "win32" ? "0~d~MetaLeft~false, 0~d~Tab~false, 0~u~Tab~false, 0~u~MetaLeft~false" :
+				/*ubuntu*/ "0~d~MetaLeft~false, 0~u~MetaLeft~false")}`
+		);
 	},
 	quit() {
 		//alt+f4 (linux, win), cmd+Q(darwin)
@@ -104,7 +204,14 @@ export const commands: Chat.ChatCommands = {
 			}`
 		);
 	},
-	desk() {
+	desktop(target) {
+		if (!target) return this.parse('/desk'); //mean to show the desktop
+		this.parse(
+			`/es 0~d~MetaLeft~false, 0~d~Digit${target.trim()}~false, 0~u~Digit${target.trim()}~false, 0~u~MetaLeft~false`
+		);
+	},
+	desk(target) {
+		if (target) return this.parse('/desktop ' + target); //meant to go to desktop #x
 		this.parse(
 			`/es ${
 				os === "darwin"
@@ -113,14 +220,11 @@ export const commands: Chat.ChatCommands = {
 			}`
 		);
 	},
-	//shell scripts
-	release(target, user, connection) {
-		this.parse(`/bash ${SCRIPTS_PATH}/controller-release.sh`);
-	},
-	airpods: function () {
-		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
-	},
-	// core commands
+
+
+	/* 
+		RAT core commands
+	*/
 	es(target, user, connection) {
 		PythonShell.run("../py/es.py", { args: [target, "n"] }, (err, res) => {
 			if (err) console.log("chat-commands.ts line 20 error!!!");
@@ -147,7 +251,11 @@ export const commands: Chat.ChatCommands = {
 			(err, res) => (err ? console.log("err", err, "\n\n", res) : 0)
 		);
 	},
-	//chat core commands
+
+
+	/*
+		chat-api core commands
+	*/
 	api: 'cmds',
 	cmds(target, user, connection) {
 		connection.send(Object.keys(commands).map((el, i) => el).join(","));
