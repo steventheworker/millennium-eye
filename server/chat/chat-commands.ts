@@ -112,6 +112,14 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	release() { //in the case things aren't working, fully release mouse & keyboard modifier keys
+		//todo: completed for macOS (only) keyboard modifier keys as of rn
+		//todo: release mouse
+		const es = ["0~d~ControlLeft~false, 0~u~ControlLeft~false", /* No ControlRight on macOS */
+						"0~d~AltLeft~false, 0~u~AltLeft~false", "0~d~AltRight~false, 0~u~AltRight~false",
+						"0~d~MetaLeft~false, 0~u~MetaLeft~false", "0~d~MetaRight~false, 0~u~MetaRight~false"]
+		this.parse(`/es ` + es.join(', '));
+	},
 	up: "arrow",
 	down: "arrow",
 	left: "arrow",
