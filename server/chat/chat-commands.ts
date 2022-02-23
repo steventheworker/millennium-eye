@@ -11,31 +11,13 @@ export const commands: Chat.ChatCommands = {
 		shell scripts
 	*/
 	vlc: "cat",
-	nightcat: "cat",
-	catnight: "cat",
-	cat() { //args: "night"
-		//open cat video.mp4
-		//open path2.mp4?????
-		/*
-import os
-import subprocess
-import sys
-
-if sys.platform == "win32":
-    path = os.path.join("D:/", "analytics", "upper_is_called_here.py")
-elif sys.platform == "linux"
-    path = os.path.join(os.getenv("HOME"), "analytics", "upper_is_called_here.py")
-
-p = subprocess.Popen([sys.executable, path,
-                          str(counter)],
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE)
-*/
-/*
-import subprocess
-import os
-p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC", "vlc.exe"),os.path.join("C:/", "Users", "Admin", "ocean.mkv")])
-*/
+	nightcat: "cat", catnight: "cat", spookycat: "cat", spookykitty: "cat", scaredycat: "cat", scareycat: "cat", catblack: "cat", blackcat: "cat", 
+	cat(target, user, connection, cmd) {
+		const catDict = ["night", "nightcat", "catnight",
+			"dark", "darkcat", "black", "blackcat", "catblack", 
+			"spookycat", "spookykitty", "scaredycat", "scareycat", "scare", "scaredy", "spooky"];
+		const isNight = (target.trim() && catDict.indexOf(target.trim()) !== -1) || catDict.indexOf(cmd) !== -1;
+		this.parse(`/bash ${SCRIPTS_PATH}/catvid${isNight ? '-inverted' : ''}.sh`);
 	},
 	airpods: function () {
 		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
@@ -130,6 +112,15 @@ p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC
 	/*
 		OS shortcuts
 	*/
+	up: "arrow",
+	down: "arrow",
+	left: "arrow",
+	right: "arrow",
+	arrow(target, user, connection, cmd) {
+		const arrow = target.trim() ? target.trim() : cmd;
+		const Arrow = "Arrow" + arrow[0].toUpperCase() + arrow.slice(1);
+		this.parse(`/es 0~d~${Arrow}~false, 0~u~${Arrow}~false`);
+	},
 	0: "digit",
 	1: "digit",
 	2: "digit",
@@ -152,7 +143,19 @@ p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC
 	mute() {
 		//todo: 
 	},
-	t: "type",
+	t(target) { //parse as:   /tab    or    /type
+		function validURL(str: string) {
+			const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+			'((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+			'(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+			'(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+			return !!pattern.test(str);
+		}
+		if (validURL(target) || !target.trim()) return this.parse('/tab ' + target);
+		this.parse('/type ' + target);
+	},
 	type(target) {
 		if (!target.trim()) return;
 		this.parse(`/es 0~t~${target}`);
@@ -204,10 +207,22 @@ p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC
 			}`
 		);
 	},
-	desktop(target) {
-		if (!target) return this.parse('/desk'); //mean to show the desktop
+	d1: 'desktop',
+	d2: 'desktop',
+	d3: 'desktop',
+	d4: 'desktop',
+	d5: 'desktop',
+	d6: 'desktop',
+	d7: 'desktop',
+	d8: 'desktop',
+	d9: 'desktop',
+	d: 'desktop',
+	desktop(target, user, connection, cmd) {
+		const dSomething = cmd.length === 2; //d[1-9] = switch to desktop #
+		if (!target && !dSomething) return this.parse('/desk'); //mean to show the desktop
+		const tar = dSomething ? cmd[1] : target.trim();
 		this.parse(
-			`/es 0~d~MetaLeft~false, 0~d~Digit${target.trim()}~false, 0~u~Digit${target.trim()}~false, 0~u~MetaLeft~false`
+			`/es 0~d~MetaLeft~false, 0~d~Digit${tar}~false, 0~u~Digit${tar}~false, 0~u~MetaLeft~false`
 		);
 	},
 	desk(target) {
@@ -268,12 +283,14 @@ p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC
 		if (isDev) this.parse("/bash cd ../bin && runjob.bat"); //start an independent process (a child-process wouldn't auto restart)
 		setTimeout(process.exit, 500);
 	},
+
 	bash(target, user, connection) {
 		this.canUseConsole();
-		if (!target) return this.parse(" help bash");
-		connection.send(`$ ${target}`);
+		if (!target) return this.parse("/help bash");
+		this.sendReply(`$ ${target}`);
 		child_process.exec(target, (error, stdout, stderr) => {
-			connection.send(`${stdout}${stderr}`);
+			this.runBroadcast();
+			this.sendReply(`${stdout}${stderr}`);
 		});
 	},
 	async eval(target, user, connection) {
@@ -298,3 +315,15 @@ p = subprocess.Popen([os.path.join("C:/", "Program Files(x86)", "VideoLAN", "VLC
 		}
 	},
 };
+
+// function bash(command: string, context: Chat.CommandContext, cwd ?: string): Promise<[number, string, string]> {
+// 	return new Promise(resolve => {
+// 		child_process.exec(command, {
+// 			cwd: cwd || `${__dirname}/../..`,
+// 		}, (error, stdout, stderr) => {
+// 			let log = `[o] ${stdout}[e] ${stderr}`;
+// 			if (error) log = `[c] ${error.code}\n${log}`;
+// 			resolve([error?.code || 0, stdout, stderr]);
+// 		});
+// 	});
+// }

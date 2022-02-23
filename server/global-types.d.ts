@@ -4,4 +4,5 @@ type User = import("./users").User;
 type Sesh = import("./users").Sesh;
 namespace Chat {
 	type ChatCommands = import("./chat/chat").ChatCommands;
+	type CommandContext = import('./chat').CommandContext;
 }
