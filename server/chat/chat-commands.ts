@@ -27,6 +27,13 @@ export const commands: Chat.ChatCommands = {
 	/*
 		browser tab   shortcuts
 	*/
+	new: 'browser',
+	window: 'browser',
+	chrome: 'browser',
+	browser(target) {
+		this.parse(`/es 0~d~MetaLeft~true, 0~d~Keym~true, 0~u~Keym~true, 0~u~MetaLeft~true`);
+		if (target.trim()) setTimeout(() => this.parse(`/es 0~t~${ target}, 0~d~Enter~false"`), 5000);
+	},
 	loc: "addressbar", //todo: args: url ( type & enter )
 	addressbar(target) {
 		//meta+l (Mac), control+l (linux + windows)
@@ -36,9 +43,8 @@ export const commands: Chat.ChatCommands = {
 					? "0~d~MetaLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~MetaLeft~false"
 					: "0~d~ControlLeft~false, 0~d~Keyl~false, 0~u~Keyl~false, 0~u~ControlLeft~false"
 			}
-			${!target ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
+			${!target.trim() ? "" : ", 1000~t~" + target + ", 0~d~Enter~false"}`
 		);
-
 	},
 	reopen: "reopenlasttab",
 	reopenlasttab() {
@@ -60,7 +66,7 @@ export const commands: Chat.ChatCommands = {
 					? "0~d~MetaLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~MetaLeft~false"
 					: "0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"
 			}
-			${!target ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
+			${!target.trim() ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
 		);
 	},
 	next: "nexttab",
@@ -190,11 +196,6 @@ export const commands: Chat.ChatCommands = {
 	space() {
 		this.parse(`/es 0~d~Space~false, 0~u~Space~false`);
 	},
-	chrome: 'browser',
-	browser() { //todo: args: url
-		//DEFAULT else windows (Edge), macOS (Safari), linux (Firefox)
-		this.parse('open https://google.com'); //todo: launch browser / make active
-	},
 	restart() {
 		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
 	},
@@ -250,7 +251,7 @@ export const commands: Chat.ChatCommands = {
 	*/
 	es(target, user, connection) {
 		PythonShell.run("../py/es.py", { args: [target, "n"] }, (err, res) => {
-			if (err) console.log("chat-commands.ts line 20 error!!!");
+			if (err) console.log("chat-commands.ts line core error (es)!!!");
 		});
 	},
 	copy(target, user, connection) {
@@ -294,11 +295,10 @@ export const commands: Chat.ChatCommands = {
 
 	bash(target, user, connection) {
 		this.canUseConsole();
-		if (!target) return this.parse("/help bash");
-		this.sendReply(`$ ${target}`);
+		if (!target) return user.send("empty bash command");
+		user.send(`$ ${target}`);
 		child_process.exec(target, (error, stdout, stderr) => {
-			this.runBroadcast();
-			this.sendReply(`${stdout}${stderr}`);
+			user.send(`${stdout}${stderr}`);
 		});
 	},
 	async eval(target, user, connection) {
