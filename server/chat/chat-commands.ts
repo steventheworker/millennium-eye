@@ -72,10 +72,11 @@ export const commands: Chat.ChatCommands = {
 	next: "nexttab",
 	prev: "nexttab",
 	prevtab: "nexttab", //todo: holding shift
-	nexttab() {
+	nexttab(target, user, connection, cmd) {
 		//control+tab (macOS + linux + windows)
+		const isPrev = cmd === "prev" || cmd === "prevtab";
 		this.parse(
-			`/es ${"0~d~ControlLeft~false, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~false"}`
+			`/es 0~d~ControlLeft~${isPrev}, 0~d~Tab~${isPrev}, 0~u~Tab~${isPrev}, 0~u~ControlLeft~${isPrev}`
 		);
 	},
 
@@ -118,6 +119,12 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	open: 'finder',
+	dir: 'finder',
+	explorer: 'finder',
+	finder() { //todo:   open @ target
+		this.parse(`/es 0~d~MetaLeft~false,0~d~Keye~false,0~u~Keye~false,0~u~MetaLeft~false`);
+	},
 	release() { //in the case things aren't working, fully release mouse & keyboard modifier keys
 		//todo: completed for macOS (only) keyboard modifier keys as of rn
 		//todo: release mouse
