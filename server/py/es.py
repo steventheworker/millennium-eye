@@ -18,7 +18,7 @@ for _e in events:
         controller.press(key, type=numType, shift=shift)
     else: #mouse event
         #scroll
-        if e[1] == "scrllms": controller.scroll_mouse(float(e[2]),  float(e[3]))
+        if e[1] == "scrllms": controller.scroll_mouse(float(e[2]) / 10, float(e[3]) / 10)
         #move, set
         if e[1] == "mm": controller.move_mouse(float(e[2]), float(e[3]))
         if e[1] == "sm": controller.set_mouse(float(e[2]),  float(e[3]))
