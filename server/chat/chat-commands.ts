@@ -189,9 +189,11 @@ export const commands: Chat.ChatCommands = {
 	del: "backspace",
 	back: "backspace",
 	backspace(target) {
+		let cmd = '/es ';
 		const repetitions = Number(target) || 1;
-		for (let i = 0; i < repetitions; i++)
-			this.parse(`/es 0~d~Backspace~false, 0~u~Backspace~false`);
+		for (let i = 0; i < repetitions; i++) cmd += '0~d~Backspace~false, 0~u~Backspace~false,';
+		cmd = cmd.slice(0, -1);
+		this.parse(cmd);
 	},
 	ktab: "tabkey",
 	tabkey() {
