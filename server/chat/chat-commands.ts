@@ -1,6 +1,7 @@
 import * as Utils from "../utils";
 import * as child_process from "child_process";
 import { PythonShell } from "python-shell";
+import { snap } from "../snap-cache";
 const SCRIPTS_PATH = "~/Desktop/important";
 import * as OS from "os";
 const os = OS.platform();
@@ -27,6 +28,17 @@ export const commands: Chat.ChatCommands = {
 	/*
 		browser tab   shortcuts
 	*/
+	f5: 'refresh', //todo: maybe trigger f5 isntead of ctrl/cmd+R
+	run: 'refresh',
+	refresh() {
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keyr~false, 0~u~Keyr~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keyr~false, 0~u~Keyr~false, 0~u~ControlLeft~false"
+			}`
+		);
+	},
 	new: 'browser',
 	window: 'browser',
 	chrome: 'browser',
@@ -138,9 +150,15 @@ export const commands: Chat.ChatCommands = {
 	left: "arrow",
 	right: "arrow",
 	arrow(target, user, connection, cmd) {
+		//determine arrow
 		const arrow = target.trim() ? target.trim() : cmd;
 		const Arrow = "Arrow" + arrow[0].toUpperCase() + arrow.slice(1);
-		this.parse(`/es 0~d~${Arrow}~false, 0~u~${Arrow}~false`);
+		//send with repetition
+		let events = '/es ';
+		const repetitions = Number(target) || 1;
+		for (let i = 0; i < repetitions; i++) events += `0~d~${Arrow}~false, 0~u~${Arrow}~false,`;
+		events = events.slice(0, -1);
+		this.parse(events);
 	},
 	0: "digit",
 	1: "digit",
@@ -188,24 +206,38 @@ export const commands: Chat.ChatCommands = {
 	delete: "backspace",
 	del: "backspace",
 	back: "backspace",
-	backspace(target) {
-		let cmd = '/es ';
+	backspace(target, user, connection, cmd) {
+		const _cmd = ((cmd === "delete" || cmd === "del") && os !== "darwin") ? "Delete" : "Backspace";
+		let events = '/es ';
 		const repetitions = Number(target) || 1;
-		for (let i = 0; i < repetitions; i++) cmd += '0~d~Backspace~false, 0~u~Backspace~false,';
-		cmd = cmd.slice(0, -1);
-		this.parse(cmd);
+		for (let i = 0; i < repetitions; i++) events += `0~d~${_cmd}~false, 0~u~${_cmd}~false,`;
+		events = events.slice(0, -1);
+		this.parse(events);
 	},
 	ktab: "tabkey",
-	tabkey() {
-		this.parse(`/es 0~d~Tab~false, 0~u~Tab~false`);
+	keytab: "tabkey",
+	tabkey(target) {
+		let events = '/es ';
+		const repetitions = Number(target) || 1;
+		for (let i = 0; i < repetitions; i++) events += `0~d~Tab~false, 0~u~Tab~false,`;
+		events = events.slice(0, -1);
+		this.parse(events);
 	},
-	enter() {
-		this.parse(`/es 0~d~Enter~false, 0~u~Enter~false`);
+	enter(target) {
+		let events = '/es ';
+		const repetitions = Number(target) || 1;
+		for (let i = 0; i < repetitions; i++) events += `0~d~Enter~false, 0~u~Enter~false,`;
+		events = events.slice(0, -1);
+		this.parse(events);
 	},
 	pause: "space",
 	play: "space",
-	space() {
-		this.parse(`/es 0~d~Space~false, 0~u~Space~false`);
+	space(target) {
+		let events = '/es ';
+		const repetitions = Number(target) || 1;
+		for (let i = 0; i < repetitions; i++) events += `0~d~Space~false, 0~u~Space~false,`;
+		events = events.slice(0, -1);
+		this.parse(events);
 	},
 	restart() {
 		this.parse(`/bash ${os === "win32" ? "shutdown /r" : "reboot /r"}`);
@@ -260,11 +292,18 @@ export const commands: Chat.ChatCommands = {
 	/* 
 		RAT core commands
 	*/
+	forcerefresh: 'r',
+	forcer: 'r',
+	force: 'r', //force refresh
+	r() {
+		snap((data) => Users.users.forEach((user) => user.send("r|" + data)));
+	},
 	es(target, user, connection) {
 		PythonShell.run("../py/es.py", { args: [target, "n"] }, (err, res) => {
 			if (err) console.log("chat-commands.ts line core error (es)!!!");
 		});
 	},
+	cp: 'copy',
 	copy(target, user, connection) {
 		const mode = target.trim() ? "copyto" : "copy";
 		PythonShell.run(
