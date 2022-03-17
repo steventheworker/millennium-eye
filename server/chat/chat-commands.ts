@@ -96,6 +96,7 @@ export const commands: Chat.ChatCommands = {
 	/*
 		window  &  tab  shortcuts
 	*/
+	x: 'closewindow',
 	closeall: "closewindow", //todo: holding shift
 	close: "closewindow",
 	closetab: "closewindow",
@@ -116,13 +117,18 @@ export const commands: Chat.ChatCommands = {
 	*/
 	last: "lastwindow",
 	switch: "lastwindow",
-	lastwindow() {
+	lastwindow(target) {
+		const repetitions = Math.abs(Number(target)) || 1;
+		const withShift = !target.trim() ? false : Number(target) !== repetitions && !isNaN(Number(target)); //Number(target) is a negative number, or 0
 		//alt+tab (linux, win), meta+tab (Mac)
+		let tabs = '';
+		for (let i = 0; i < repetitions; i++) tabs += `0~d~Tab~${withShift && i !== 0}, 0~u~Tab~${withShift && i !== 0}, `;
+		if (Number(target) === 0 && target.trim()) tabs += `0~d~Tab~${withShift}, 0~u~Tab~${withShift}, `;
 		this.parse(
 			`/es ${
 				os === "darwin"
-					? "0~d~MetaLeft~false, 0~d~Tab~false, 0~u~Tab~false, 120~u~MetaLeft~false" //120ms delay
-					: "0~d~AltLeft~false, 0~d~Tab~false, 0~u~Tab~false, 120~u~AltLeft~false"
+					? `0~d~MetaLeft~false, ${tabs} 120~u~MetaLeft~false` //120ms delay
+					: `0~d~AltLeft~false, ${tabs} 120~u~AltLeft~false`
 			}`
 		);
 	},
@@ -249,6 +255,7 @@ export const commands: Chat.ChatCommands = {
 				/*ubuntu*/ "0~d~MetaLeft~false, 0~u~MetaLeft~false")}`
 		);
 	},
+	q: 'quit',
 	quit() {
 		//alt+f4 (linux, win), cmd+Q(darwin)
 		this.parse(
