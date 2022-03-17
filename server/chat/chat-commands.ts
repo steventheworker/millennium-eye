@@ -250,6 +250,7 @@ export const commands: Chat.ChatCommands = {
 		events = events.slice(0, -1);
 		this.parse(events);
 	},
+	sp: "space",
 	pause: "space",
 	play: "space",
 	space(target) {
