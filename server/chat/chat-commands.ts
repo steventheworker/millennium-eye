@@ -81,12 +81,14 @@ export const commands: Chat.ChatCommands = {
 			${!target.trim() ? "" : ", 0~t~" + target + ", 0~d~Enter~false"}`
 		);
 	},
+	n: "nexttab",
+	p: "nexttab",
 	next: "nexttab",
 	prev: "nexttab",
 	prevtab: "nexttab", //todo: holding shift
 	nexttab(target, user, connection, cmd) {
 		//control+tab (macOS + linux + windows)
-		const isPrev = cmd === "prev" || cmd === "prevtab";
+		const isPrev = cmd === "prev" || cmd === "prevtab" || cmd === "p";
 		this.parse(
 			`/es 0~d~ControlLeft~${isPrev}, 0~d~Tab~${isPrev}, 0~u~Tab~${isPrev}, 0~u~ControlLeft~${isPrev}`
 		);
@@ -137,6 +139,18 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	a: "selectall",
+	all: "selectall",
+	selectall() {
+		//meta+a (Mac), control+a (linux + windows)
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? "0~d~MetaLeft~false, 0~d~Keya~false, 0~u~Keya~false, 0~u~MetaLeft~false"
+					: "0~d~ControlLeft~false, 0~d~Keya~false, 0~u~Keya~false, 0~u~ControlLeft~false"
+			}`
+		);
+	},
 	open: 'finder',
 	dir: 'finder',
 	explorer: 'finder',
