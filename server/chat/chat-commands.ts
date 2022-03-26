@@ -139,6 +139,20 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	rc: 'click',
+	rclick: 'click',
+	rightclick: 'click',
+	lc: 'click',
+	click(target, user, connection, cmd) {
+		if (target === "r" || target === "right" || cmd === "rc" || cmd === "rclick" || cmd === "rightclick") {
+			this.parse(`/es 0~pr,0~rr`); //right click
+		} else this.parse(`/es 0~pl,0~rl`); //left click
+	},
+	zero: "tuck",
+	hidemouse: "tuck",
+	tuck() {
+		this.parse(`/es 0~sm~0~9999`);
+	},
 	a: "selectall",
 	all: "selectall",
 	selectall() {
@@ -165,13 +179,17 @@ export const commands: Chat.ChatCommands = {
 						"0~d~MetaLeft~false, 0~u~MetaLeft~false", "0~d~MetaRight~false, 0~u~MetaRight~false"]
 		this.parse(`/es ` + es.join(', '));
 	},
+	ff: "arrow",
+	rw: "arrow",
+	fastforward: "arrow",
+	rewind: "arrow",
 	up: "arrow",
 	down: "arrow",
 	left: "arrow",
 	right: "arrow",
 	arrow(target, user, connection, cmd) {
-		//determine arrow
-		const arrow = target.trim() ? target.trim() : cmd;
+		const arrowNicks: {[key: string] : string} = {ff: "right", rw: "left", fastforward: "right", rewind: "left"};
+		const arrow = cmd === "arrow" ? target.trim() : (arrowNicks[cmd] || cmd);
 		const Arrow = "Arrow" + arrow[0].toUpperCase() + arrow.slice(1);
 		//send with repetition
 		let events = '/es ';
@@ -336,7 +354,7 @@ export const commands: Chat.ChatCommands = {
       or:        /copy [new clipboardContent] //"copyto" server*/,
 			(err, res) => {
 				if (err) console.log("err", err, "\n\n", res);
-				if (res) user.send("cp|" + res);
+				if (res) user.send("cp| " + res);
 			}
 		);
 	},
