@@ -23,6 +23,9 @@ export const commands: Chat.ChatCommands = {
 	airpods: function () {
 		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
 	},
+	blackground() {
+		this.parse('/loc https://www.solidbackgrounds.com/images/1920x1080/1920x1080-black-solid-color-background.jpg');
+	},
 	
 	
 	/*
