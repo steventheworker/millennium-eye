@@ -31,7 +31,6 @@ export const commands: Chat.ChatCommands = {
 	/*
 		browser tab   shortcuts
 	*/
-	f5: 'refresh', //todo: maybe trigger f5 isntead of ctrl/cmd+R
 	run: 'refresh',
 	refresh() {
 		this.parse(
@@ -147,9 +146,16 @@ export const commands: Chat.ChatCommands = {
 	rightclick: 'click',
 	lc: 'click',
 	click(target, user, connection, cmd) {
-		if (target === "r" || target === "right" || cmd === "rc" || cmd === "rclick" || cmd === "rightclick") {
-			this.parse(`/es 0~pr,0~rr`); //right click
-		} else this.parse(`/es 0~pl,0~rl`); //left click
+		//send with repetitions
+		let events = '/es ';
+		const repetitions = Number(target) || 1;
+		//right or left click? create dataString
+		if (target === "r" || target === "right" || cmd === "rc" || cmd === "rclick" || cmd === "rightclick")
+			for (let i = 0; i < repetitions; i++) events += `0~pr,0~rr,`;
+		else
+			for (let i = 0; i < repetitions; i++) events += `0~pl,0~rl,`;
+		events = events.slice(0, -1); //remove trailing comma
+		this.parse(events);
 	},
 	zero: "tuck",
 	hidemouse: "tuck",
@@ -201,6 +207,24 @@ export const commands: Chat.ChatCommands = {
 		events = events.slice(0, -1);
 		this.parse(events);
 	},
+	f1: "fn",
+	f2: "fn",
+	f3: "fn",
+	f4: "fn",
+	f5: "fn",
+	f6: "fn",
+	f7: "fn",
+	f8: "fn",
+	f9: "fn",
+	f10: "fn",
+	f11: "fn",
+	f12: "fn",
+	fn(target, user, connection, cmd) {
+		let x = Number(target.trim());
+		if (cmd === "fn" && !x) return connection.send('missing digit no.');
+		if (cmd !== "fn") x = Number(cmd);
+		this.parse(`/es 0~d~F${x}~false, 0~u~F${x}~false`);
+	},
 	0: "digit",
 	1: "digit",
 	2: "digit",
@@ -247,6 +271,7 @@ export const commands: Chat.ChatCommands = {
 	delete: "backspace",
 	del: "backspace",
 	back: "backspace",
+	bk: 'backspace',
 	backspace(target, user, connection, cmd) {
 		const _cmd = ((cmd === "delete" || cmd === "del") && os !== "darwin") ? "Delete" : "Backspace";
 		let events = '/es ';
