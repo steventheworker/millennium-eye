@@ -141,6 +141,20 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	z: 'zoom',
+	zoom(target) {
+		//meta+= / meta+- (Mac), control+= / control+- (linux + windows)
+		if (target.trim() === "0") target = "Digit0";
+		else if (target.trim() === "-") target = "Minus";
+		else target = "Equal";
+		this.parse(
+			`/es ${
+				os === "darwin"
+					? `0~d~MetaLeft~false, 0~d~${target}~false, 0~u~${target}~false, 0~u~MetaLeft~false`
+					: `0~d~ControlLeft~false, 0~d~${target}~false, 0~u~${target}~false, 0~u~ControlLeft~false`
+			}`
+		);
+	},
 	rc: 'click',
 	rclick: 'click',
 	rightclick: 'click',
