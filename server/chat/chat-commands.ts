@@ -222,7 +222,7 @@ export const commands: Chat.ChatCommands = {
 	fn(target, user, connection, cmd) {
 		let x = Number(target.trim());
 		if (cmd === "fn" && !x) return connection.send('missing digit no.');
-		if (cmd !== "fn") x = Number(cmd);
+		if (cmd !== "fn") x = Number(cmd.slice(1));
 		this.parse(`/es 0~d~F${x}~false, 0~u~F${x}~false`);
 	},
 	0: "digit",
