@@ -119,6 +119,7 @@ export const commands: Chat.ChatCommands = {
 	/*
 			window    shortcuts
 	*/
+	sw: "lastwindow",
 	last: "lastwindow",
 	switch: "lastwindow",
 	lastwindow(target) {
