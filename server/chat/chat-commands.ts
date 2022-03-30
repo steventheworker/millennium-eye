@@ -119,10 +119,11 @@ export const commands: Chat.ChatCommands = {
 	/*
 			window    shortcuts
 	*/
-	sw: "lastwindow",
-	last: "lastwindow",
-	switch: "lastwindow",
-	lastwindow(target) {
+	sw: "alttab",
+	last: "alttab",
+	switch: "alttab",
+	altab: "alttab",
+	alttab(target) {
 		const repetitions = Math.abs(Number(target)) || 1;
 		const withShift = !target.trim() ? false : Number(target) !== repetitions && !isNaN(Number(target)); //Number(target) is a negative number, or 0
 		//alt+tab (linux, win), meta+tab (Mac)
