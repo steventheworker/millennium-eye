@@ -143,6 +143,10 @@ export const commands: Chat.ChatCommands = {
 	/*
 		OS shortcuts
 	*/
+	term: 'terminal',
+	terminal() {
+		this.parse(`/es 0~d~MetaLeft~true, 0~d~ControlLeft~true, 0~d~Keyt~false, 0~u~Keyt~false, 0~u~ControlLeft~true, 0~u~MetaLeft~true`);
+	},
 	z: 'zoom',
 	zoom(target) {
 		//meta+= / meta+- (Mac), control+= / control+- (linux + windows)
@@ -196,6 +200,7 @@ export const commands: Chat.ChatCommands = {
 	finder() { //todo:   open @ target
 		this.parse(`/es 0~d~MetaLeft~false,0~d~Keye~false,0~u~Keye~false,0~u~MetaLeft~false`);
 	},
+	rel: 'release',
 	release() { //in the case things aren't working, fully release mouse & keyboard modifier keys
 		//todo: completed for macOS (only) keyboard modifier keys as of rn
 		//todo: release mouse
