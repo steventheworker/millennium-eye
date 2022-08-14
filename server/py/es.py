@@ -31,17 +31,6 @@ for _e in events:
 
 # force a refresh after simulating input (vvv) (Below code === screeny.py + (time.sleep(0.25)))
 if sys.argv[2] == 'y':
-    import base64
-    import mss
-    from PIL import Image
-    from io import BytesIO
+    from screeny import grab
     time.sleep(0.25)
-    with mss.mss() as sct:
-        monitor = sct.monitors[1]   # Use the 1st monitor
-        im = sct.grab(monitor)
-        img = Image.frombytes("RGB", im.size, im.bgra, "raw", "BGRX")
-        byteio = BytesIO()
-        img.save(byteio, format='JPEG', optimize=True, quality=20)
-        b64 = base64.b64encode(byteio.getvalue())
-        base64str = b64.decode('utf-8')
-        print(base64str)
+    print(grab())
