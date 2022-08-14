@@ -195,6 +195,7 @@ export const commands: Chat.ChatCommands = {
 			}`
 		);
 	},
+	e: 'finder',
 	open: 'finder',
 	dir: 'finder',
 	explorer: 'finder',
