@@ -6,27 +6,29 @@
 
 ## Install Steps
 
--   Install yarn/npm packages (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install`
--   Install pip packages: run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
+-   <u>**Install yarn/npm packages**</u> (NodeJS) &nbsp; - &nbsp; via &nbsp; `npm install` or `yarn install`
+-   <u>**Install pip packages:**</u> run this line from within &nbsp; &nbsp; "server/py" &nbsp; &nbsp; folder
 
     -   `pip3 install -r ./requirements.txt`
 
--   platform dependent install instruction
+-   <u>**Cross-platform Instructions**</u>
 
-    -   (windows only) (hot reload / restarting)
+    -   (windows only) - hot reload / restarting
         -   `pip3 install py2exe`
     -   (Linux only)
-        -   (copy paste support)
+        -   enable copy paste
             -   `sudo apt-get install -y xclip`
-        -   (shortcuts/hotkey support)
+        -   shortcuts/hotkey support
             -   `pip3 install pyautogui`
+        -   (Ubuntu version <u>&gt;</u> 22.04 / Wayland) - alternate screenshot utility
+            -   `sudo apt-get install -y `
     -   (macOS only): Nothing, as of yet 👄
 
--   Finally, clone the client code by pasting the line below @ project root:
+-   **and finally, <u>clone the client code</u>** by pasting the line below @ project root:
 
     -   `git clone https://github.com/steventheworker/millennium-eye-client client`
 
--   Install Completed! ⛳️ -but don't forget to run either `yarn build` or `npm run build` (before starting if you're not running a dev environment)
+-   Install Completed! ⛳️ -but don't forget to run either `yarn build` or `npm run build` (before starting via `yarn start` or `npm start` (if you're not going to run a dev environment via `yarn dev` / `npm run dev`))
 
 &nbsp;
 
@@ -34,16 +36,16 @@
 
 # Running a development / production environment
 
-## yarn dev / npm run dev &nbsp; &nbsp; or &nbsp; &nbsp; yarn production / npm run production
+use `npm run production` or `yarn production` if unsatisfied with the screenshot refresh rate. The dev/start environment both use a slower rate.
 
 Production server: http://localhost:8000,
-Sockets: http://localhost:8000
+Sockets: http://localhost:8000/sockets
 
 &nbsp;
 
 &nbsp;
 
-notes: you can only run yarn lib / yarn dev on the server, not externally or from ssh (you can start the process externally though), this is because of the screenshot library not having $DISPLAY set through ssh, dunno how to fix that right now
+notes: you can only run the server on the actual machine, not externally via network/ssh, this is because of the screenshot library (mss) not having $DISPLAY set through ssh
 
 #### protip: visit your local devices using ipv4 adresses (eg: http://192.168.x.x:8000 format), for external devices: port forward and connect using a public ip / domain name
 
@@ -54,6 +56,8 @@ notes: you can only run yarn lib / yarn dev on the server, not externally or fro
 &nbsp;
 
 &nbsp;
+
+# Installing millenium-eye (client) on iOS / Android
 
 https://docs.expo.dev/classic/building-standalone-apps/#if-you-choose-to-build-for-ios
 

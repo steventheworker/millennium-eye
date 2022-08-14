@@ -2,9 +2,3 @@ mss
 pynput
 clipboard
 Pillow
-
-#??? i forget who uses this???
-#screeninfo
-
-# windows only
-#py2exe
