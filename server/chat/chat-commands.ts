@@ -20,6 +20,7 @@ export const commands: Chat.ChatCommands = {
 		const isNight = (target.trim() && catDict.indexOf(target.trim()) !== -1) || catDict.indexOf(cmd) !== -1;
 		this.parse(`/bash ${SCRIPTS_PATH}/catvid${isNight ? '-inverted' : ''}.sh`);
 	},
+	ap: 'airpods',
 	airpods: function () {
 		this.parse(`/bash ${SCRIPTS_PATH}/toggle-airpods.sh`);
 	},
